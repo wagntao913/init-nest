@@ -17,18 +17,18 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly UsersService: UsersService) {}
 
-  @Get('')
+  @Get('getUserList')
   async getUserList(): Promise<any> {
     return this.UsersService.getUserList();
     // return { success: true };
   }
 
-  @Post()
+  @Post('createUser')
   creatUser(@Body() creatUserDto: UserCreatDto): any {
-    return this.UsersService.creatUser(creatUserDto);
+    return this.UsersService.register(creatUserDto);
   }
 
-  @Put(':id')
+  @Put('updateUser/:id')
   updateUser(
     @Param('id') id: string,
     @Body() updateUserDto: UserCreatDto,
@@ -36,7 +36,7 @@ export class UsersController {
     return this.UsersService.updateUser(id, updateUserDto);
   }
 
-  @Delete(':id')
+  @Delete('deleteUser/:id')
   deleteUser(@Param('id') id: string): any {
     return this.UsersService.deleteUser(id);
   }

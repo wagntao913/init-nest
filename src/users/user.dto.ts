@@ -1,15 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserCreatDto {
-  @ApiProperty({ description: '用户名', example: 'user', required: true })
-  username: string;
+  @ApiProperty({ description: '用户名', example: 'beppo' })
+  accountName: string;
 
-  @ApiProperty({ description: '性别', example: 1 })
-  sex: string;
+  @ApiProperty({ description: '姓名', example: '张无忌' })
+  realName: string;
 
-  @ApiProperty({ description: '生日', example: '2010-02-18' })
-  birthday: string;
+  @ApiProperty({ description: '密码', example: '000000' })
+  password: string;
 
-  @ApiProperty({ description: '地址', example: '北京市海淀区' })
-  address: string;
+  @ApiProperty({ description: '二次密码', example: '000000' })
+  repassword: string;
+
+  @ApiProperty({ description: '手机号', example: '15698875896' })
+  mobile: string;
 }
