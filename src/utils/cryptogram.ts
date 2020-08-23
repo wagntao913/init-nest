@@ -5,11 +5,14 @@ export function makeSalt(): string {
 }
 
 export function encryptPassword(password: string, salt: string): string {
-  if (password || !salt) {
+  if (!password || !salt) {
     return '';
   }
+  debugger;
   const tempSalt = Buffer.from(salt, 'base64');
-  return crypto
+  const newPwd = crypto
     .pbkdf2Sync(password, tempSalt, 10000, 16, 'sha1')
     .toString('base64');
+  console.log('-----', newPwd);
+  return newPwd;
 }

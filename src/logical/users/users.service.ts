@@ -101,7 +101,7 @@ export class UsersService {
    * @param username 用户名
    */
   async isExist(username: string): Promise<any> {
-    const sql = ` SELECT * FROM user_info WHERE user_name='${username}'`;
+    const sql = ` SELECT * FROM user_info WHERE account_name='${username}'`;
 
     try {
       const res = await sequlize.query(sql, {
@@ -153,7 +153,9 @@ export class UsersService {
       };
     }
     const salt = makeSalt();
-    const hashPwd = encryptPassword(password, salt);
+    const hashPwd =encryptPassword(password, salt);
+    console.log('== hashPwd ==',hashPwd)
+    console.log('== salt ==',salt)
     const registerSql = `
       INSERT INTO 
         user_info(account_name, real_name, password, password_salt, mobile, user_status, role, create_by)
