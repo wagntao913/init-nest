@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UserCreatDto } from './user.dto';
+import { loginDto, UserCreatDto } from './user.dto';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UsersService } from './users.service';
 
@@ -20,11 +20,10 @@ export class UsersController {
   @Get('getUserList')
   async getUserList(): Promise<any> {
     return this.UsersService.getUserList();
-    // return { success: true };
   }
 
-  @Post('createUser')
-  creatUser(@Body() creatUserDto: UserCreatDto): any {
+  @Post('register')
+  register(@Body() creatUserDto: UserCreatDto): any {
     return this.UsersService.register(creatUserDto);
   }
 
@@ -39,5 +38,10 @@ export class UsersController {
   @Delete('deleteUser/:id')
   deleteUser(@Param('id') id: string): any {
     return this.UsersService.deleteUser(id);
+  }
+
+  @Post('login')
+  login(@Body() loginParams: loginDto): any {
+    return this.UsersService.login(loginParams);
   }
 }

@@ -11,7 +11,7 @@ export class UsersService {
    * @description 获取用户列表
    */
   async getUserList(): Promise<any> {
-    const sql = 'SELECT * FROM user_info';
+    const sql = 'SELECT account_name,real_name,mobile FROM user_info';
     try {
       const res = await sequlize.query(sql, {
         type: Sequelize.QueryTypes.SELECT,
@@ -153,9 +153,9 @@ export class UsersService {
       };
     }
     const salt = makeSalt();
-    const hashPwd =encryptPassword(password, salt);
-    console.log('== hashPwd ==',hashPwd)
-    console.log('== salt ==',salt)
+    const hashPwd = encryptPassword(password, salt);
+    console.log('== hashPwd ==', hashPwd);
+    console.log('== salt ==', salt);
     const registerSql = `
       INSERT INTO 
         user_info(account_name, real_name, password, password_salt, mobile, user_status, role, create_by)
@@ -176,6 +176,65 @@ export class UsersService {
         code: 503,
         msg: `Service error: ${error}`,
       };
+    }
+  }
+
+  /**
+   * @description 校验登录信息
+   * @param username 用户名
+   * @param password 密码
+   */
+  async checkedPassword(username: string, password: string): Promise<any> {
+    const user = await this.isExist(username);
+    if (user) {
+      const savePassword = user.password;
+      const salt = user.password_salt;
+      const newPwd = encryptPassword(password, salt);
+      if (newPwd === savePassword) {
+        return {
+          code: 1,
+          user,
+        };
+      } else {
+        return {
+          code: 2,
+          msg: '用户名或密码错误',
+        };
+      }
+    } else {
+      return {
+        code: 3,
+        msg: '查无此人',
+      };
+    }
+  }
+
+  async login(loginParam: {
+    username: string;
+    password: string;
+  }): Promise<any> {
+    const checkedResult = await this.checkedPassword(
+      loginParam.username,
+      loginParam.password,
+    );
+    switch (checkedResult.code) {
+      case 1:
+        return {
+          code: 200,
+          msg: '登陆成功',
+        };
+        break;
+      case 2:
+        return {
+          code: 600,
+          msg: '账号或密码不正确',
+        };
+      default:
+        return {
+          code: 600,
+          msg: '查无此人',
+        };
+        break;
     }
   }
 }

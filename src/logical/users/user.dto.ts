@@ -16,3 +16,11 @@ export class UserCreatDto {
   @ApiProperty({ description: '手机号', example: '15698875896' })
   mobile: string;
 }
+
+export class loginDto {
+  @ApiProperty({ description: '登录用户名', example: 'beppo' })
+  username: string;
+
+  @ApiProperty({ description: '登录密码', example: '000000' })
+  password: string;
+}
