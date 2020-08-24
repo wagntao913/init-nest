@@ -12,7 +12,7 @@ import { loginDto, UserCreatDto } from './user.dto';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UsersService } from './users.service';
 
-@Controller('users')
+@Controller('project/users')
 @ApiTags('用户')
 export class UsersController {
   constructor(private readonly UsersService: UsersService) {}
