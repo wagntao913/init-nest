@@ -209,32 +209,32 @@ export class UsersService {
     }
   }
 
-  async login(loginParam: {
-    username: string;
-    password: string;
-  }): Promise<any> {
-    const checkedResult = await this.checkedPassword(
-      loginParam.username,
-      loginParam.password,
-    );
-    switch (checkedResult.code) {
-      case 1:
-        return {
-          code: 200,
-          msg: '登陆成功',
-        };
-        break;
-      case 2:
-        return {
-          code: 600,
-          msg: '账号或密码不正确',
-        };
-      default:
-        return {
-          code: 600,
-          msg: '查无此人',
-        };
-        break;
-    }
-  }
+  // async login(loginParam: {
+  //   username: string;
+  //   password: string;
+  // }): Promise<any> {
+  //   const checkedResult = await this.checkedPassword(
+  //     loginParam.username,
+  //     loginParam.password,
+  //   );
+  //   switch (checkedResult.code) {
+  //     case 1:
+  //       return {
+  //         code: 200,
+  //         msg: '登陆成功',
+  //       };
+  //       break;
+  //     case 2:
+  //       return {
+  //         code: 600,
+  //         msg: '账号或密码不正确',
+  //       };
+  //     default:
+  //       return {
+  //         code: 600,
+  //         msg: '查无此人',
+  //       };
+  //       break;
+  //   }
+  // }
 }
