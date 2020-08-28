@@ -11,7 +11,7 @@ export class UsersService {
    * @description 获取用户列表
    */
   async getUserList(): Promise<any> {
-    const sql = 'SELECT account_name,real_name,mobile FROM user_info';
+    const sql = 'SELECT user_id,account_name,real_name,mobile FROM user_info';
     try {
       const res = await sequlize.query(sql, {
         type: Sequelize.QueryTypes.SELECT,
