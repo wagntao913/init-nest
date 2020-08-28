@@ -5,6 +5,8 @@ import * as express from 'express';
 
 import { logger } from './middleware/logger.middleware';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
+import { HttpExceptionFilter } from './filter/http-exception.filter';
+import { AnyExceptionFilter } from './filter/any-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,9 +16,11 @@ async function bootstrap() {
   app.use(express.urlencoded({ extended: true }));
   // 监听路由，打印日志
   app.use(logger);
-  app.useGlobalInterceptors(new TransformInterceptor())
-  
-
+  app.useGlobalInterceptors(new TransformInterceptor());
+  // 处理HTTP异常
+  app.useGlobalFilters(new AnyExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
+  // 配置swagger-ui
   const options = new DocumentBuilder()
     .setTitle('nest 接口文档')
     .setDescription('接口文档')
