@@ -14,7 +14,7 @@ lerna-debug.log*
 .DS_Store
 
 #filefold
-/config
+/config/db.ts
 
 # Tests
 /coverage
