@@ -38,10 +38,11 @@ export class AuthService {
   }
 
   async certificate(user: any) {
+    console.log(user)
     const payload = {
-      username: user.username,
-      sub: user.id,
-      realName: user.realName,
+      username: user.user_name,
+      sub: user.user_id,
+      realName: user.real_name,
       role: user.role,
     };
     // console.log('JWT验证 - Step 3: 处理 jwt 签证', `payload: ${JSON.stringify(payload)}`);

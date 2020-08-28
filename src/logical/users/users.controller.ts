@@ -47,7 +47,7 @@ export class UsersController {
     return this.UsersService.deleteUser(id);
   }
 
-  @ApiBody({ description: '用户登录' })
+  @ApiBody({ description: '用户登录', type: loginDto })
   @Post('login')
   async login(@Body() LoginParams: loginDto) {
     const authResult = await this.AuthService.validateUser(
