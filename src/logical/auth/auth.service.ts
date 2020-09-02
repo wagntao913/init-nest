@@ -1,4 +1,4 @@
-import { Injectable, PayloadTooLargeException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { encryptPassword } from 'src/utils/cryptogram';
@@ -37,8 +37,13 @@ export class AuthService {
     };
   }
 
-  async certificate(user: any) {
-    console.log(user)
+  async certificate(user: {
+    user_name: any;
+    user_id: any;
+    real_name: any;
+    role: any;
+  }): Promise<any> {
+    console.log(user);
     const payload = {
       username: user.user_name,
       sub: user.user_id,
