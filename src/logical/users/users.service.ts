@@ -36,6 +36,35 @@ export class UsersService {
   }
 
   /**
+   * @description 通过id获取用户信息
+   * @param id 用户id
+   */
+  async getUserInfoById(id: string): Promise<any> {
+    const sql = `SELECT user_id,account_name, real_name, mobile, role, user_status, create_time, update_time FROM user_info WHERE user_id = ${id}`;
+    try {
+      const res = await sequlize.query(sql, {
+        type: Sequelize.QueryTypes.SELECT,
+        raw: true,
+      });
+      const user = res;
+      if (user) {
+        return {
+          code: 200,
+          data: {
+            user,
+          },
+          msg: 'Success',
+        };
+      }
+    } catch (error) {
+      return {
+        code: 503,
+        msg: `Service error: ${error}`,
+      };
+    }
+  }
+
+  /**
    * @description 修改用户
    * @param id 用户ID
    * @param updateUserDto 用户修改信息Dto
@@ -120,7 +149,7 @@ export class UsersService {
 
   /**
    *
-   *
+   * @description 注册用户
    * @param {{
    *     accountName: any;
    *     realName: any;
@@ -208,33 +237,4 @@ export class UsersService {
       };
     }
   }
-
-  // async login(loginParam: {
-  //   username: string;
-  //   password: string;
-  // }): Promise<any> {
-  //   const checkedResult = await this.checkedPassword(
-  //     loginParam.username,
-  //     loginParam.password,
-  //   );
-  //   switch (checkedResult.code) {
-  //     case 1:
-  //       return {
-  //         code: 200,
-  //         msg: '登陆成功',
-  //       };
-  //       break;
-  //     case 2:
-  //       return {
-  //         code: 600,
-  //         msg: '账号或密码不正确',
-  //       };
-  //     default:
-  //       return {
-  //         code: 600,
-  //         msg: '查无此人',
-  //       };
-  //       break;
-  //   }
-  // }
 }

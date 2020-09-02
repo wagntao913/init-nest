@@ -1,4 +1,3 @@
-import { AuthService } from './../auth/auth.service';
 import {
   Body,
   Controller,
@@ -9,6 +8,8 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { AuthService } from './../auth/auth.service';
 import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { loginDto, UserCreatDto } from './user.dto';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,6 +27,12 @@ export class UsersController {
   @Get('getUserList')
   async getUserList(): Promise<any> {
     return this.UsersService.getUserList();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('getUserInfo/:id')
+  getUserInfoById(@Param('id') id: string):any {
+    return this.UsersService.getUserInfoById(id);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -49,7 +56,7 @@ export class UsersController {
 
   @ApiBody({ description: '用户登录', type: loginDto })
   @Post('login')
-  async login(@Body() LoginParams: loginDto) {
+  async login(@Body() LoginParams: loginDto): Promise<any> {
     const authResult = await this.AuthService.validateUser(
       LoginParams.username,
       LoginParams.password,

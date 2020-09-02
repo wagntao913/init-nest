@@ -57,6 +57,7 @@ export class AuthService {
         code: 200,
         data: {
           token,
+          id: user.user_id,
         },
         msg: `登录成功`,
       };
